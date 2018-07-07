@@ -31,17 +31,19 @@ class App extends Component {
                 this.setState({
                     chain3: results.chain3
                 })
-                // console.log(this.state.chain3);
-                // var coinbase = this.state.chain3.mc.coinbase;
-                var account = this.state.chain3.mc.accounts[3];
+
+                var account = this.state.chain3.mc.accounts[0];
                 this.setState({
                         account: account
                     })
                 this.instantiateContract()
 
             })
-            .catch(() => {
-                console.log('Error finding chain3.')
+            .catch((err) => {
+                if (err) {
+                    console.log('Error finding chain3.'+err)
+                    alert("无法连线，请使用下面方式启动moac。\n./moac --testnet --rpc --rpccorsdomain \"*\"");
+                }
             })
     }
 
@@ -73,6 +75,7 @@ class App extends Component {
 
             if (contractCode === '0x') {
                 console.log("Contract address has no data!");
+                alert("合约地址无有效数据，请检查你的网络和合约地址是否正确！");
                 return;
             }
 
@@ -85,22 +88,22 @@ class App extends Component {
                 var starName = tcalls.voteMapping(i)[1];
                 var starCountry = tcalls.voteMapping(i)[2];
                 var starVote = tcalls.voteMapping(i)[3];
-                console.log('starName:' + starName + 'starCountry: ' + starCountry + 'starVote: ' + starVote);
+                // console.log('starName:' + starName + 'starCountry: ' + starCountry + 'starVote: ' + starVote);
 
                 document.querySelectorAll(".starCountry").forEach( function(e, index) {
-                  if (index+1 == i) {
+                  if (index+1 === i) {
                     e.innerHTML = starCountry;
                   }
                 });
 
                 document.querySelectorAll(".starName").forEach( function(e, index) {
-                  if (index+1 == i) {
+                  if (index+1 === i) {
                     e.innerHTML = starName;
                   }
                 });
 
                 document.querySelectorAll(".voteBtn").forEach( function(e, index) {
-                  if (index+1 == i) {
+                  if (index+1 === i) {
                     e.innerHTML = starVote;
                   }
                 });
@@ -115,13 +118,14 @@ class App extends Component {
               stars,
             })
 
-            console.log("stars: " + this.state.stars);
+            // console.log("stars: " + this.state.stars);
 
 
 
 
         } else {
             console.log("RPC not connected!");
+            alert("无法连线，请使用下面方式启动moac。\n./moac --testnet --rpc --rpccorsdomain \"*\"");
         }
 
     }
@@ -129,7 +133,6 @@ class App extends Component {
     listenForEvents() {
         this.state.chain3.mc.getBlockNumber((err, number) => {
                 if (err === null) {
-                    console.log("blockNumber:" + number);
                     const myEvent = this.state.contract.votedEvent({}, {
                         fromBlock: number,
                         toBlock: "lastest",
@@ -182,7 +185,10 @@ class App extends Component {
         document.querySelectorAll(".voteBtn").forEach( function(e, index) {
                   e.disabled = "disabled";
                 });
-        this.state.myEvent.stopWatching(()=>console.log("stop watching!!"));
+        if (this.state.myEvent) {
+            this.state.myEvent.stopWatching(()=>console.log("stop watching!!"));
+        }
+
       }
     }
 
@@ -208,17 +214,16 @@ class App extends Component {
 
     callContractMethod(src, contractAddress, gasValue, inchainID, inByteCode){
 
-        console.log("\ncoinbase " + src);
-        console.log("\n合约地址 " + contractAddress);
-        console.log("\ngas估算 " +gasValue);
-        console.log("\nOn network:", inchainID);
-        console.log("\nTcalldata:", inByteCode);
+        // console.log("\ncoinbase " + src);
+        // console.log("\n合约地址 " + contractAddress);
+        // console.log("\ngas估算 " +gasValue);
+        // console.log("\nOn network:", inchainID);
+        // console.log("\nTcalldata:", inByteCode);
 
 
         var txcount = this.state.chain3.mc.getTransactionCount(src);
         console.log("Get tx account", txcount)
-      //   //Build the raw tx obj
-      //   //note the transaction
+
         var rawTx = {
           from: src,
           to: contractAddress,
@@ -232,37 +237,14 @@ class App extends Component {
 
         console.log(rawTx);
 
-        //moac:0x8Fd1f44ca2f20c934D2b483083a38b3eBE2f3bBc?amount=123.6600&token=MOAC
-
-      // var cmd1 = this.state.chain3.signTransaction(rawTx, "你的私钥");
-
-      // console.log("\nSend signed TX:\n", cmd1);
-
-    //   this.state.chain3.mc.sendRawTransaction(cmd1, function(err, hash) {
-    //         if (!err){
-    //             console.log("Succeed!: ", hash);
-    //             return hash;
-    //         }else{
-    //             console.log("Chain3 error:", err.message);
-    //             // response.success = false;
-    //             // response.error = err.message;
-    //             return err.message;
-    //         }
-
-    //     console.log("Get response from MOAC node in the feedback function!")
-    //         // res.send(response);
-    //     });
-
-
-        //sendTransaction 不需要填写秘钥
         this.state.chain3.mc.sendTransaction(rawTx, (err, hash) => {
             if (!err){
                 console.log("Succeed!: ", hash);
                 return hash;
             }else{
                 console.log("Chain3 error:", err.message);
-                if (err.message == "authentication needed: password or unlock") {
-                    alert("无法投票：请输入密码或解锁unlock你的钱包（控制器执行）")
+                if (err.message === "authentication needed: password or unlock") {
+                    alert("无法投票：请输入密码或解锁unlock你的钱包（moac控制台执行）")
                 }
                 else {
                     alert(err.message);
