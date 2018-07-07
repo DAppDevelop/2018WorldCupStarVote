@@ -18,7 +18,7 @@
 
 * npm（这个不做另外介绍了，自行百度吧）
 * Truffle(DApp开发框架）`nmp install -g truffle`
-* Ganache(本地调试环境，对，因为本人习惯和Ganache使用方便，我选择了先用以太坊环境调试我们的智能合约）[这里下载](https://truffleframework.com/ganache)
+* Ganache(本地调试环境，对，因为本人习惯和Ganache使用方便，我选择了先用以太坊环境调试我们的智能合约。用Ganache调试我们智能合约代码的过程这里不展开了，想了解的可以去百度一下）[这里下载](https://truffleframework.com/ganache)
 * MOAC Pangu 0.8.2 [这里下载](https://github.com/MOACChain/moac-core/releases)
 * 还有Chain3 JavaScript API （熟悉Web3的话，Chain3应该很容易上手）[文档](https://github.com/MOACChain/chain3/blob/master/Chain3.md)
 
@@ -27,11 +27,11 @@
 ###1、使用Truffle Boxes搭建我们的DApp框架
 
 ```
-mkdir WorldCupStarVote
+$ mkdir WorldCupStarVote
 
-cd WorldCupStarVote
+$ cd WorldCupStarVote
 
-truffle unbox react
+$ truffle unbox react
 Downloading...
 Unpacking...
 Setting up...
@@ -73,7 +73,7 @@ Saving successful migration to network...
   ... 0x865fd68055b1e1cf78ea8935f1ed99b9b07a494429e73ef2dd6f3d2634607842
 Saving artifacts...
 
-npm run start
+$ npm run start
 ```
 
 如无意外，http://localhost:3000/ 应该能看见我们的网页了。
@@ -86,8 +86,8 @@ npm install --save chain3
 
 ###3、编写智能合约
 首先我们删除掉SimpleStorage.sol。
-接着创建我们的投票智能合约
-`touch contracts/Vote.sol`
+
+接着创建我们的投票智能合约；相关内容见代码注释 `touch contracts/Vote.sol`
 
 修改`2_deploy_contracts.js`文件
 
@@ -100,8 +100,22 @@ module.exports = function(deployer) {
 
 ```
 
-###4、修改我们.html、.js、.css文件
+###4、修改项目的.html、.js、.css文件内容
+详细内容请查看
 
+* app.js
+* app.css
+* getChain3.js
+
+
+###5、部署合约到MOAC测试网
+
+具体步骤可以看[这篇文章](https://mp.weixin.qq.com/s/e8LRSaEsVaLgwAJgLW4wPg)
+
+
+###6、运行本地节点（测试网）
+
+`./moac --testnet --rpc --rpccorsdomain "*"`
 
 ## 你可能遇到的问题
 

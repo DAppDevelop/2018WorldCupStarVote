@@ -1,68 +1,141 @@
-/* PAGE */
+html {
+      /*
+       *content-box:padding和border不被包含在定义的width和height之内。
+       *对象的实际宽度等于设置的width值和border、padding之和，
+       *即 ( Element width = width + border + padding )此属性表现为标准模式下的盒模型。
+       *
+       *padding-box：padding计算入width内
+       *
+       *border-box：padding和border被包含在定义的width和height之内。
+       *对象的实际宽度就等于设置的width值，即使定义有border和padding也不会改变对象的实际宽度，
+       *即 ( Element width = width )此属性表现为怪异模式下的盒模型。
+       */
+      box-sizing: border-box;
+      background:#ffc600;
+      font-family:'helvetica neue';
+      font-size: 20px;
+      font-weight: 200;
+    }
+    body {
+      margin: 0;
+    }
 
-body,
-.pure-g [class*=pure-u] {
-  font-family: 'Open Sans', sans-serif;
-}
+    /* * 代表所有元素，*：before代表所有元素的前一个元素，*：after代表所有元素的后一个元素 */
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
 
-h1, h2, h3 {
-  font-family: 'Oswald', 'Arial Narrow', sans-serif;
-}
+    .panels {
+      min-height:80vh;
+      /* overflow 这个属性定义溢出元素内容区的内容会如何处理。 hidden 内容会被修剪，并且其余内容是不可见的。 */
+      overflow: hidden;
+      display: flex;
+    }
 
-code {
-  display: block;
-  margin: 20px 0 15px 0;
-  padding: 10px;
-  background: #eee;
-}
+    .panel {
+      margin-bottom:0px;
+      background:#6B0F9C;
+      box-shadow:inset 0 0 0 5px rgba(255,255,255,0.1);
+      color:white;
+      text-align: center;
+      align-items:center;
+      /* Safari transitionend event.propertyName === flex */
+      /* Chrome + FF transitionend event.propertyName === flex-grow */
+      transition:
+        font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        background 0.2s;
+      font-size: 20px;
+      background-size:cover;
+      background-position:center;
+      flex: 1;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
 
-.container {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 45px 20px;
-}
 
-.pure-button-primary {
-  background-color: #0c1a2b;
-}
+    .panel1 { background-image:url(http://i9.qhimg.com/t01952342d14e13e3af.jpg); }
+    .panel2 { background-image:url(http://imgsports.eastday.com/sports/img/596daf4eaee21.jpeg); }
+    .panel3 { background-image:url(http://img1.dongqiudi.com/fastdfs3/M00/10/2C/ChOxM1sjeT-AUaXKAAN2HIe1ptc751.jpg); }
+    .panel4 { background-image:url(http://p0.ifengimg.com/pmop/2017/0504/3BA927BAC1EDE8737581F334CA9F0FD332B1C87C_size22_w640_h360.jpeg); }
+    .panel5 { background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530124793721&di=a194fbe39150ee2393c6eab59662ddfd&imgtype=0&src=http%3A%2F%2Fc1.hoopchina.com.cn%2Fuploads%2Fstar%2Fevent%2Fimages%2F150211%2Fc54c7b8a647adcc935bc17abafafbabede1e3ba4.jpg); }
 
-.pure-button-primary:hover {
-  background-color: #233e5e;
-}
+    /* Flex Items */
+    /* .panel > * 选择 .panel 的子元素  */
+    .panel > * {
+      margin:0;
+      width: 100%;
+      transition:transform 0.5s;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-.pure-form input[type="text"]:focus {
-  border-color: #0c1a2b;
-}
+    .starCountry {
+      flex: 1 0 auto;
+    }
 
-/* NAVBAR */
+    .starName {
+      flex: 3 0 auto;
+    }
 
-.navbar {
-  position: fixed;
-  padding: 5px;
-  background: #0c1a2b;
-  font-family: 'Oswald', 'Arial Narrow', sans-serif;
-}
 
-.navbar a {
-  color: #fff;
-}
 
-.navbar a:active,
-.navbar a:focus,
-.navbar a:hover {
-  background: #233e5e;
-}
+    /* 匹配父元素的第一个子元素 */
+    .panel > *:first-child { transform: translateY(-100%); }
+    .panel.open-active > *:first-child { transform: translateY(0); }
+    /* 匹配父元素的最后一个子元素 */
+    .panel > *:last-child { transform: translateY(100%); }
+    .panel.open-active > *:last-child { transform: translateY(0); }
 
-.navbar .pure-menu-heading {
-  font-weight: bold;
-  text-transform: none;
-}
+    .panel p {
+      text-transform: uppercase;
+      font-family: 'Amatic SC', cursive;
+      text-shadow:0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+      font-size: 2em;
+    }
 
-.navbar .navbar-right {
-  float: right;
-}
+    /* 匹配其父元素的第2个子元素，第一个编号为1 */
+    .panel p:nth-child(2) {
+      font-size: 2em;
+    }
 
-.navbar .uport-logo {
-  height: 16px;
-  margin-right: 10px;
-}
+    .panel.open {
+      flex: 8;
+      font-size:2em;
+    }
+
+    .panel1panel1 {
+      color: red;
+    }
+
+    .addressDiv {
+      height: 10vh;
+      justify-content: center;
+      vertical-align: middle;
+      background: rgba(128,239,54,1);
+    }
+
+    .addressP {
+      padding-left: 40px;
+      padding-top: 3vh;
+      margin-top:0;
+      flex: 10;
+      height: 4vh;
+      text-align: left;
+      /*overflow: hidden;*/
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .voteBtn {
+      height: 40px; flex: 1 0 40;background-color: red;box-sizing: content-box;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 0;
+      padding-top: 2vh;
+    }
