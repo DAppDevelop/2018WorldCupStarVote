@@ -117,6 +117,9 @@ module.exports = function(deployer) {
 
 `./moac --testnet --rpc --rpccorsdomain "*"`
 
+###7、打开http://localhost:3000/ ，进行投票
+
+
 ## 你可能遇到的问题
 
 

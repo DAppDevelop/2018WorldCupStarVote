@@ -31,7 +31,7 @@ contract Vote {
     addStar('C-罗纳尔多', '葡萄牙');
     addStar('卢卡库', '比利时');
     addStar('切里舍夫', '俄罗斯');
-    addStar('迭戈-科斯塔', '西班牙');
+    addStar('梅西', '阿根廷');
     addStar('凯恩', '英格兰');
   }
 
