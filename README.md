@@ -10,6 +10,9 @@
 
 在🍺啤酒+小龙虾的狂欢中，率先体验去中心化DApp的魅力！
 
+## 投票地址
+https://dappdevelop.github.io/2018WorldCupStarVote/
+
 ## 项目最终效果
 
 ![](./Snip20180708_2.png)
