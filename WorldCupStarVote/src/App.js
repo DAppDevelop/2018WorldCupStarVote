@@ -32,7 +32,7 @@ class App extends Component {
                     chain3: results.chain3
                 })
 
-                var account = this.state.chain3.mc.accounts[0];
+                var account = this.state.chain3.mc.accounts[1];
                 this.setState({
                         account: account
                     })

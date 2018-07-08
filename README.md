@@ -26,7 +26,7 @@
 
 ## 实现步骤
 
-###1、使用Truffle Boxes搭建我们的DApp框架
+### 1、使用Truffle Boxes搭建我们的DApp框架
 
 ```
 $ mkdir WorldCupStarVote
@@ -80,13 +80,13 @@ $ npm run start
 
 如无意外，http://localhost:3000/ 应该能看见我们的网页了。
 
-###2、使用npm安装chain3
+### 2、使用npm安装chain3
 
 ```
 npm install --save chain3
 ```
 
-###3、编写智能合约
+### 3、编写智能合约
 首先我们删除掉SimpleStorage.sol。
 
 接着创建我们的投票智能合约；相关内容见代码注释 `touch contracts/Vote.sol`
@@ -102,7 +102,7 @@ module.exports = function(deployer) {
 
 ```
 
-###4、修改项目的.html、.js、.css文件内容
+### 4、修改项目的.html、.js、.css文件内容
 详细内容请查看
 
 * app.js
@@ -114,12 +114,12 @@ module.exports = function(deployer) {
 因为不是前端出身，完成这个项目时间不长，js和html的代码各位大神将就看吧，我也知道写的一塌糊涂。。
 
 
-###5、部署合约到MOAC主网上
+### 5、部署合约到MOAC主网上
 
 具体步骤可以看[这篇文章](https://mp.weixin.qq.com/s/e8LRSaEsVaLgwAJgLW4wPg)
 
 
-###6、修改合约abi和地址
+### 6、修改合约abi和地址
 
 ```
 var tokenabi = '[ { "constant": false, "inputs": [ { "name": "_starID", "type": "uint256" } ], "name": "vote", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [ { "name": "", "type": "address", "value": "0x22e15bdca4aee3012ec994320f1e117e9c50aea3" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "starsCount", "outputs": [ { "name": "", "type": "uint256", "value": "5" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "voters", "outputs": [ { "name": "", "type": "bool", "value": false } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "uint256" } ], "name": "voteMapping", "outputs": [ { "name": "id", "type": "uint256", "value": "0" }, { "name": "name", "type": "string", "value": "" }, { "name": "country", "type": "string", "value": "" }, { "name": "voteCount", "type": "uint256", "value": "0" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "_candidateId", "type": "uint256" } ], "name": "votedEvent", "type": "event" } ]';
@@ -128,7 +128,7 @@ var tokenabi = '[ { "constant": false, "inputs": [ { "name": "_starID", "type": 
         var tokenaddress = '0xb27e3a83E715F5f95d12Ef436Cb67a4b0734b1bF';//合约地址
 ```
 
-###7、webpack 打包上传到GitHub Page。
+### 7、webpack 打包上传到GitHub Page。
 
 
 ## 如何投票
@@ -137,12 +137,23 @@ var tokenabi = '[ { "constant": false, "inputs": [ { "name": "_starID", "type": 
 
 2、在控制台里解锁你的钱包 `> personal.unlockAccount(mc.accounts[0])`
 
-3、打开投票网址，进行投票即可。
+3、打开[投票网址](https://dappdevelop.github.io/2018WorldCupStarVote/)，进行投票即可。
 
 投票完成后，你可以看见每个球星已获得的票数。
 
 ## 你可能遇到的问题
 
+## 支持作者
+
+打赏地址：
+
+MOAC: 0x22E15BDCA4aEE3012eC994320f1e117e9C50AeA3
+
+ETH: 0x19eb92179ae467afba54420c229df75131cb8cac
+
+## 联系方式
+
+E-mail：chenysh521@gmail.com
 
 
 
