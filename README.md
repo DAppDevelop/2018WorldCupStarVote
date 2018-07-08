@@ -12,6 +12,8 @@
 
 ## 项目最终效果
 
+![](./Snip20180708_2.png)
+
 ## 开始之前
 
 你需要准备
@@ -107,20 +109,41 @@ module.exports = function(deployer) {
 * app.css
 * getChain3.js
 
+重要步骤的注释会逐步补全。
 
-###5、部署合约到MOAC测试网
+因为不是前端出身，完成这个项目时间不长，js和html的代码各位大神将就看吧，我也知道写的一塌糊涂。。
+
+
+###5、部署合约到MOAC主网上
 
 具体步骤可以看[这篇文章](https://mp.weixin.qq.com/s/e8LRSaEsVaLgwAJgLW4wPg)
 
 
-###6、运行本地节点（测试网）
+###6、修改合约abi和地址
 
-`./moac --testnet --rpc --rpccorsdomain "*"`
+```
+var tokenabi = '[ { "constant": false, "inputs": [ { "name": "_starID", "type": "uint256" } ], "name": "vote", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [ { "name": "", "type": "address", "value": "0x22e15bdca4aee3012ec994320f1e117e9c50aea3" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "starsCount", "outputs": [ { "name": "", "type": "uint256", "value": "5" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "voters", "outputs": [ { "name": "", "type": "bool", "value": false } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "uint256" } ], "name": "voteMapping", "outputs": [ { "name": "id", "type": "uint256", "value": "0" }, { "name": "name", "type": "string", "value": "" }, { "name": "country", "type": "string", "value": "" }, { "name": "voteCount", "type": "uint256", "value": "0" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "_candidateId", "type": "uint256" } ], "name": "votedEvent", "type": "event" } ]';
 
-###7、打开http://localhost:3000/ ，进行投票
+        var tokenContract = this.state.chain3.mc.contract(JSON.parse(tokenabi));
+        var tokenaddress = '0xb27e3a83E715F5f95d12Ef436Cb67a4b0734b1bF';//合约地址
+```
 
+###7、webpack 打包上传到GitHub Page。
+
+
+## 如何投票
+假如你只想体验一下这个DApp，那你只需要在按照下面的步骤，即可进行投票：
+1、在本地运行moac节点 `$ ./moac --rpc --rpccorsdomain "*"`
+
+2、在控制台里解锁你的钱包 `> personal.unlockAccount(mc.accounts[0])`
+
+3、打开投票网址，进行投票即可。
+
+投票完成后，你可以看见每个球星已获得的票数。
 
 ## 你可能遇到的问题
+
+
 
 
 
