@@ -43,14 +43,16 @@ contract Vote {
 
   //投票
   function vote (uint _starID) public payable {
-
+    //当前投票者之前不能投过票
     require(!voters[msg.sender]);
+    //starID要符合
     require(_starID > 0 && _starID <= starsCount);
 
     voters[msg.sender] = true;
 
     voteMapping[_starID].voteCount ++;
 
+    //触发事件
     emit votedEvent(_starID);
 
 

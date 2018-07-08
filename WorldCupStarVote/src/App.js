@@ -42,7 +42,7 @@ class App extends Component {
             .catch((err) => {
                 if (err) {
                     console.log('Error finding chain3.'+err)
-                    alert("无法连线，请使用下面方式启动moac。\n./moac --testnet --rpc --rpccorsdomain \"*\"");
+                    alert("无法连线，请使用下面方式启动moac。\n./moac --rpc --rpccorsdomain \"*\"");
                 }
             })
     }
@@ -61,7 +61,7 @@ class App extends Component {
             tokenaddress
         });
 
-        var tcalls = tokenContract.at(tokenaddress);
+        var tcalls = tokenContract.at(tokenaddress);//获得合约实例
         this.setState({
             contract: tcalls
         })
@@ -69,7 +69,7 @@ class App extends Component {
         if (this.state.chain3.isConnected()) {
             console.log("RPC is connected!");
 
-            this.listenForEvents();
+            this.listenForEvents();//设置事件监听
 
             var contractCode = this.state.chain3.mc.getCode(tokenaddress);
 
@@ -80,7 +80,7 @@ class App extends Component {
             }
 
             // console.log("owners:", tcalls.owner());
-            var starsCount = tcalls.starsCount();
+            var starsCount = tcalls.starsCount();//获取可以投票的球星数量
             // console.log('starsCount: ' + starsCount);
 
             var stars = new Array();
@@ -125,7 +125,7 @@ class App extends Component {
 
         } else {
             console.log("RPC not connected!");
-            alert("无法连线，请使用下面方式启动moac。\n./moac --testnet --rpc --rpccorsdomain \"*\"");
+            alert("无法连线，请使用下面方式启动moac。\n./moac --rpc --rpccorsdomain \"*\"");
         }
 
     }
@@ -175,17 +175,20 @@ class App extends Component {
 
     VotedUI() {
       var hasVoted = this.state.contract.voters(this.state.account);
+
       if (!hasVoted) {
+        //如果当前钱包地址没有进行过投票，则显示投票按钮
         document.querySelectorAll(".voteBtn").forEach( function(e, index) {
                   e.innerHTML = "投票";
                 });
       }
       else {
-
+        //如果当前钱包地址已经进行过投票，则显示各球星的票数
         document.querySelectorAll(".voteBtn").forEach( function(e, index) {
                   e.disabled = "disabled";
                 });
         if (this.state.myEvent) {
+            //按钮点击事件失效
             this.state.myEvent.stopWatching(()=>console.log("stop watching!!"));
         }
 
@@ -211,7 +214,7 @@ class App extends Component {
     }
 
 
-
+    //调用合约方法
     callContractMethod(src, contractAddress, gasValue, inchainID, inByteCode){
 
         // console.log("\ncoinbase " + src);
