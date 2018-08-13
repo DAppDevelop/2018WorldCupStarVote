@@ -1,4 +1,4 @@
-# 2018 WORLD CUP STAR VOTE
+# 2018 WORLD CUP STAR VOTE!!
 2018世界杯你最喜爱球星投票——区块链DApp
 
 ## 项目概述
